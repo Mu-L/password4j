@@ -1,8 +1,18 @@
 package org.example.project;
 
-import com.password4j.*;
-import com.password4j.types.Argon2;
-import com.password4j.types.Hmac;
+import com.password4j.crypto.Argon2Function;
+import com.password4j.crypto.BcryptFunction;
+import com.password4j.crypto.CompressedPBKDF2Function;
+import com.password4j.crypto.HashBuilder;
+import com.password4j.crypto.HashChecker;
+import com.password4j.crypto.HashUpdate;
+import com.password4j.crypto.HashingFunction;
+import com.password4j.crypto.PBKDF2Function;
+import com.password4j.Password;
+import com.password4j.crypto.ScryptFunction;
+import com.password4j.crypto.SecureString;
+import com.password4j.crypto.types.Argon2;
+import com.password4j.crypto.types.Hmac;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -16,6 +16,13 @@
  */
 package com.password4j;
 
+import com.password4j.crypto.Hash;
+import com.password4j.crypto.HashBuilder;
+import com.password4j.crypto.HashChecker;
+import com.password4j.crypto.HashingFunction;
+import com.password4j.generator.PasswordGenerator;
+
+
 /**
  * This class provides the two main operations on password: hash and verify.
  * <p>
@@ -106,6 +113,11 @@ public class Password
         }
 
         return hashObject.getHashingFunction().check(plainTextPassword, hashObject.getResult(), hashObject.getSalt(), hashObject.getPepper());
+    }
+
+    public static PasswordGenerator generate()
+    {
+        return new PasswordGenerator();
     }
 
 }
