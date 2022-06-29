@@ -54,7 +54,18 @@ public class P4jPropertyReader
             LOG.warn(MESSAGE, message, defaultValue, key);
             return defaultValue;
         }
-        return Integer.parseInt(readString(key));
+        return Integer.parseInt(str);
+    }
+
+    public static long readLong(String key, long defaultValue, String message)
+    {
+        String str = readString(key);
+        if (str == null)
+        {
+            LOG.warn(MESSAGE, message, defaultValue, key);
+            return defaultValue;
+        }
+        return Long.parseLong(str);
     }
 
     public static boolean readBoolean(String key, boolean defaultValue)
@@ -64,7 +75,7 @@ public class P4jPropertyReader
         {
             return defaultValue;
         }
-        return Boolean.parseBoolean(readString(key));
+        return Boolean.parseBoolean(str);
     }
 
     public static String readString(String key, String defaultValue, String message)

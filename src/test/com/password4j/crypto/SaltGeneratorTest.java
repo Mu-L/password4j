@@ -1,5 +1,6 @@
 package com.password4j.crypto;
 
+import com.password4j.AlgorithmFinder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

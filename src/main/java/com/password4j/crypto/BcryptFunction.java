@@ -22,6 +22,7 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import com.password4j.AlgorithmFinder;
 import com.password4j.BadParametersException;
 import com.password4j.P4jUtils;
 import com.password4j.crypto.types.Bcrypt;

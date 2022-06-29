@@ -38,6 +38,11 @@ import com.password4j.generator.PasswordGenerator;
 public class Password
 {
 
+    static
+    {
+        P4jUtils.writeInitMessage();
+    }
+
     private Password()
     {
         //

@@ -18,10 +18,7 @@ package com.password4j.crypto;
 
 import static org.junit.Assert.assertTrue;
 
-import com.password4j.BadParametersException;
-import com.password4j.P4jPropertyReader;
-import com.password4j.P4jUtils;
-import com.password4j.Password;
+import com.password4j.*;
 import com.password4j.crypto.types.Argon2;
 import com.password4j.crypto.types.Bcrypt;
 import com.password4j.crypto.types.Hmac;
@@ -793,7 +790,13 @@ public class PasswordTest
                 .addPepper("shared-secret")
                 .with(bcrypt);
 
-        System.out.println(verified);
+        assertTrue(verified);
+    }
+
+    @Test
+    public void message()
+    {
+        Password.hash("asd");
     }
 
 }

@@ -16,6 +16,8 @@
  */
 package com.password4j.crypto;
 
+import com.password4j.AlgorithmFinder;
+
 /**
  * Builder class that helps to create a chain of parameters to be used
  * in the verification process.

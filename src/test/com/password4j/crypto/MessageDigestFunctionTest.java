@@ -23,13 +23,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.password4j.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.password4j.BadParametersException;
-import com.password4j.P4jPropertyReader;
-import com.password4j.P4jUtils;
-import com.password4j.Password;
 import com.password4j.crypto.types.Bcrypt;
 import com.password4j.crypto.types.Hmac;
 

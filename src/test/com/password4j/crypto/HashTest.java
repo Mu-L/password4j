@@ -2,6 +2,7 @@ package com.password4j.crypto;
 
 import java.util.Arrays;
 
+import com.password4j.AlgorithmFinder;
 import org.junit.Assert;
 import org.junit.Test;
 

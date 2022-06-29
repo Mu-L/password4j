@@ -14,16 +14,20 @@
  *  limitations under the License.
  *
  */
-package com.password4j.crypto;
+package com.password4j;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.Provider;
 import java.security.SecureRandom;
 import java.security.Security;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.password4j.crypto.*;
+import com.password4j.generator.HOTPGenerator;
+import com.password4j.generator.TOTPGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -363,12 +367,26 @@ public class AlgorithmFinder
         return Security.getAlgorithms("MessageDigest");
     }
 
+    public static HOTPGenerator getHOTPGeneratorInstance()
+    {
+        int length = P4jPropertyReader.readInt("generator.hotp.length", 6, "Length for HOTP is not defined");
+        return HOTPGenerator.getInstance(length);
+    }
+
+    public static TOTPGenerator getTOTPGeneratorInstance()
+    {
+        int length = P4jPropertyReader.readInt("generator.totp.length", 6, "Length for TOTP is not defined");
+        int interval = P4jPropertyReader.readInt("generator.totp.interval", 60000, "Time interval for TOTP is not defined");
+        String algorithm = P4jPropertyReader.readString("generator.totp.algorithm", Hmac.SHA256.toString(), "Length for TOTP is not defined");
+        return TOTPGenerator.getInstance(Hmac.fromName(algorithm), Duration.ofMillis(interval), length);
+    }
+
     private static boolean useStrongRandom()
     {
         return P4jPropertyReader.readBoolean("global.random.strong", false);
     }
 
-    static void initialize()
+    public static void initialize()
     {
         SecureRandom sr;
         if (useStrongRandom())

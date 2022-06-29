@@ -17,6 +17,7 @@
 
 package com.password4j;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
@@ -29,15 +30,20 @@ import java.security.NoSuchProviderException;
 import java.security.PrivilegedAction;
 import java.security.SecureRandom;
 import java.security.Security;
-import java.util.Arrays;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.password4j.crypto.SecureString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.helpers.NOPLogger;
 
 
 public class P4jUtils
 {
+
+    private static final Logger LOG = LoggerFactory.getLogger(P4jUtils.class);
 
     public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
@@ -540,6 +546,75 @@ public class P4jUtils
         }
 
         throw new NoSuchAlgorithmException("No strong SecureRandom impls available: " + property);
+    }
+
+    public static void writeInitMessage()
+    {
+        if(!P4jPropertyReader.readBoolean("splashscreen", true))
+        {
+            return;
+        }
+
+        Set<String> digests = AlgorithmFinder.getAllMessageDigests();
+        List<String> variants = AlgorithmFinder.getAllPBKDF2Variants();
+
+        String[] message = new String[12];
+        message[0] = "+---------------+";
+        message[1] = "| \uD83D\uDD12 Password4j |";
+        message[2] = message[0];
+        message[3] =  "The following algorithms are enabled:";
+        message[4] = " \u2705 Argon2";
+        message[5] = " \u2705 scrypt";
+        message[6] = " \u2705 bcrypt";
+
+        Iterator<String> diter = digests.iterator();
+        Iterator<String> viter = variants.iterator();
+        StringBuilder sb = new StringBuilder(" \u2705 ");
+        while(viter.hasNext())
+        {
+            sb.append(viter.next());
+            if(viter.hasNext())
+            {
+                sb.append(", ").append(viter.next()).append(", ");
+            }
+        }
+        message[7] = sb.toString();
+
+        sb.setLength(0);
+        sb.append(" \u2705 ");
+
+        while(diter.hasNext())
+        {
+            sb.append(diter.next());
+            if(diter.hasNext())
+            {
+                sb.append(", ").append(diter.next()).append(", ");
+            }
+        }
+        message[8] = sb.toString();
+        message[9] = "-------------------------------------------------------------------------";
+        message[10] = "Like it?  \u2B50 Star the repository https://github.com/Password4j/password4j";
+        message[11] = message[9];
+        printMessage(message);
+    }
+
+    private static void printMessage(String[] message)
+    {
+        if (LOG instanceof NOPLogger)
+        {
+            for(String line : message)
+            {
+                System.out.println(line);
+            }
+        }
+        else
+        {
+            for(String line : message)
+            {
+                LOG.info(line);
+            }
+
+        }
     }
 
 }

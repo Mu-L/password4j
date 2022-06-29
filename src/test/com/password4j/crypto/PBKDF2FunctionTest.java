@@ -19,6 +19,7 @@ package com.password4j.crypto;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+import com.password4j.AlgorithmFinder;
 import com.password4j.BadParametersException;
 import com.password4j.P4jUtils;
 import com.password4j.Password;

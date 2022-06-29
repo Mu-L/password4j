@@ -17,6 +17,7 @@
 
 package com.password4j.crypto;
 
+import com.password4j.AlgorithmFinder;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import com.password4j.BadParametersException;

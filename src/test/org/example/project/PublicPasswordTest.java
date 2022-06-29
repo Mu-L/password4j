@@ -154,6 +154,12 @@ public class PublicPasswordTest
         }
     }
 
+    @Test
+    public void testGenerator()
+    {
+
+    }
+
     private static class TestSuite
     {
         private String hash;
