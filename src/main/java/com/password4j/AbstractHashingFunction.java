@@ -77,6 +77,24 @@ public abstract class AbstractHashingFunction implements HashingFunction
         return result;
     }
 
+    @Override
+    public Hash hash(byte[] plainTextPassword, byte[] salt, CharSequence pepper)
+    {
+        byte[] peppered = Utils.append(Utils.fromCharSequenceToBytes(pepper), plainTextPassword);
+        Hash result;
+        if (salt == null)
+        {
+            result = hash(peppered);
+        }
+        else
+        {
+            result = hash(peppered, salt);
+        }
+
+        result.setPepper(pepper);
+        return result;
+    }
+
     /**
      * Just calls {@link #check(CharSequence, String)} without salt
      * parameter.

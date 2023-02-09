@@ -52,6 +52,8 @@ public interface HashingFunction
      */
     Hash hash(CharSequence plainTextPassword);
 
+    Hash hash(byte[] plainTextPassword);
+
     /**
      * Creates a {@link Hash} from a plaintext password and a salt.
      * Depending on the implementation, the hash may contain
@@ -69,6 +71,8 @@ public interface HashingFunction
      * @since 0.1.0
      */
     Hash hash(CharSequence plainTextPassword, String salt);
+
+    Hash hash(byte[] plainTextPassword, byte[] salt);
 
     /**
      * Creates a {@link Hash} from a plaintext password and a salt.
@@ -88,6 +92,8 @@ public interface HashingFunction
      * @since 1.5.0
      */
     Hash hash(CharSequence plainTextPassword, String salt, CharSequence pepper);
+
+    Hash hash(byte[] plainTextPassword, byte[] salt, CharSequence pepper);
 
     /**
      * Checks if the CHF generated the hash starting from

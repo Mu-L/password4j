@@ -150,11 +150,39 @@ public class PBKDF2Function extends AbstractHashingFunction
     }
 
     @Override
+    public Hash hash(byte[] plainTextPassword)
+    {
+        byte[] salt = SaltGenerator.generate();
+        return hash(plainTextPassword, salt);
+    }
+
+    @Override
     public Hash hash(CharSequence plainTextPassword, String salt)
     {
         try
         {
             SecretKey key = internalHash(plainTextPassword, salt, this.algorithmAsString, this.iterations, this.length);
+            byte[] encodedKey = key.getEncoded();
+            return new Hash(this, getHash(encodedKey, salt), encodedKey, salt);
+        }
+        catch (NoSuchAlgorithmException nsae)
+        {
+            String message = "`" + algorithm + "` is not a valid algorithm";
+            throw new UnsupportedOperationException(message, nsae);
+        }
+        catch (IllegalArgumentException | InvalidKeySpecException e)
+        {
+            String message = "Invalid specification with salt=" + salt + ", #iterations=" + iterations + " and length=" + length;
+            throw new BadParametersException(message, e);
+        }
+    }
+
+    @Override
+    public Hash hash(byte[] plainTextPassword, byte[] salt)
+    {
+        try
+        {
+            SecretKey key = internalHash(Utils.fromCharSequenceToChars(), salt, this.algorithmAsString, this.iterations, this.length);
             byte[] encodedKey = key.getEncoded();
             return new Hash(this, getHash(encodedKey, salt), encodedKey, salt);
         }
